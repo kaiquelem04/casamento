@@ -1,0 +1,514 @@
+/* =========================================================
+   Maê & Kaique — site do casamento
+   Paleta e flores vindas do convite do Canva
+   ========================================================= */
+
+:root {
+  --vinho: #613032;
+  --vinho-profundo: #4d2527;
+  --papel: #eeebe6;
+  --branco: #ffffff;
+  --branco-suave: rgba(255, 255, 255, 0.84);
+  --vinho-suave: rgba(97, 48, 50, 0.78);
+  --fio-claro: rgba(255, 255, 255, 0.42);
+  --fio-vinho: rgba(97, 48, 50, 0.28);
+
+  --script: "Pinyon Script", "Segoe Script", cursive;
+  --texto: "Cormorant Garamond", "Cormorant", Garamond, Georgia, serif;
+
+  --miolo: 1040px;
+  --respiro: clamp(72px, 10vw, 128px);
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--vinho);
+  font-family: var(--texto);
+  font-weight: 500;
+  font-size: clamp(17.5px, 0.6vw + 15px, 20px);
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+p { margin: 0; }
+
+h1, h2 {
+  margin: 0;
+  font-family: var(--script);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+h2 { font-size: clamp(44px, 5.4vw, 66px); }
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition: text-decoration-color 0.2s;
+}
+:focus-visible {
+  outline: 1.5px solid currentColor;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ---------- Superfícies ---------- */
+.vinho { background: var(--vinho); color: var(--branco); }
+.papel { background: var(--papel); color: var(--vinho); }
+.vinho a { text-decoration-color: var(--fio-claro); }
+.vinho a:hover { text-decoration-color: var(--branco); }
+.papel a { text-decoration-color: var(--fio-vinho); }
+.papel a:hover { text-decoration-color: var(--vinho); }
+
+.secao {
+  position: relative;
+  overflow: clip;
+  padding: var(--respiro) 22px;
+}
+.miolo {
+  position: relative;
+  z-index: 1;
+  max-width: var(--miolo);
+  margin: 0 auto;
+}
+.coluna { max-width: 34rem; }
+.texto {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-top: clamp(18px, 2.4vw, 28px);
+}
+
+/* ---------- Flores aquarela ----------
+   Cada moldura tem a proporção da página do Canva (397 × 559);
+   1u = 1px do design, então as flores ficam exatamente onde estavam. */
+.flores {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  aspect-ratio: 397 / 559;
+  container-type: size;
+  pointer-events: none;
+  z-index: 0;
+}
+.flores-esq { left: 0; }
+.flores-dir { right: 0; }
+
+.flor {
+  --u: calc(100cqh / 559);
+  position: absolute;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.flor-topo { width: calc(var(--u) * 204.94); aspect-ratio: 620 / 956;  background-image: url("img/flor-topo.webp"); }
+.flor-base { width: calc(var(--u) * 205.21); aspect-ratio: 620 / 1026; background-image: url("img/flor-base.webp"); }
+
+.flores-esq .flor-topo { left: calc(var(--u) * -96.93);  top: calc(var(--u) * 4.32);   transform: rotate(12.73deg); }
+.flores-esq .flor-base { left: calc(var(--u) * -104.99); top: calc(var(--u) * 250.59); }
+.flores-dir .flor-topo { left: calc(var(--u) * 279.77);  top: calc(var(--u) * 11.33);  transform: rotate(-2.69deg) scaleX(-1); }
+.flores-dir .flor-base { left: calc(var(--u) * 272.46);  top: calc(var(--u) * 251.58); transform: scaleX(-1); }
+
+/* ---------- Capa ---------- */
+.capa {
+  position: relative;
+  overflow: clip;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(640px, 92svh, 900px);
+}
+
+.menu {
+  position: absolute;
+  top: 26px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  gap: clamp(22px, 3vw, 40px);
+  font-style: italic;
+  font-size: 1.05em;
+}
+.menu a {
+  color: var(--branco-suave);
+  text-decoration-color: transparent;
+}
+.menu a:hover { color: var(--branco); text-decoration-color: var(--fio-claro); }
+
+.capa-conteudo {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(20px, 2.8vh, 30px);
+  max-width: 46rem;
+  padding: 104px 24px 80px;
+  text-align: center;
+}
+.chamada {
+  max-width: 24ch;
+  font-style: italic;
+  font-size: 1.15em;
+  line-height: 1.45;
+  color: var(--branco-suave);
+}
+.nomes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: clamp(56px, 7.2vw, 100px);
+  line-height: 1.08;
+}
+.nomes .e { font-size: 0.52em; line-height: 1.25; }
+.data {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.2em 0.9em;
+  font-weight: 600;
+  font-size: 1.12em;
+  letter-spacing: 0.06em;
+}
+.data .sep { font-size: 0.6em; opacity: 0.7; transform: translateY(-0.2em); }
+.versiculo {
+  max-width: 30ch;
+  font-style: italic;
+  color: var(--branco-suave);
+}
+
+/* ---------- Linha do tempo ---------- */
+#programacao h2 { text-align: center; }
+
+.linha-do-tempo {
+  --passo: 30px;              /* distância entre momentos no celular */
+  list-style: none;
+  max-width: 30rem;
+  margin: clamp(40px, 5vw, 64px) auto 0;
+  padding: 0;
+}
+.momento {
+  display: grid;
+  grid-template-columns: 76px 14px 1fr;
+  column-gap: 16px;
+  padding-bottom: var(--passo);
+}
+.momento:last-child { padding-bottom: 0; }
+
+.icone {
+  align-self: center;
+  justify-self: center;
+  width: auto;
+  max-width: 76px;
+  max-height: 60px;
+  object-fit: contain;
+}
+.trilho {
+  position: relative;
+  font-size: clamp(22px, 1vw + 18px, 26px);   /* mesmo corpo da hora: alinha a estrela */
+}
+.trilho::before {                              /* linha que liga os momentos */
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: calc(-1 * var(--passo));
+  width: 1px;
+  background: var(--vinho);
+  transform: translateX(-50%);
+}
+.momento:first-child .trilho::before { top: 0.62em; }
+.momento:last-child .trilho::before { bottom: auto; height: 0.62em; }
+.estrela {
+  position: absolute;
+  left: 50%;
+  top: 0.62em;
+  width: 11px;
+  height: 11px;
+  transform: translate(-50%, -50%);
+  fill: var(--vinho);
+}
+.hora {
+  display: block;
+  font-style: italic;
+  font-size: clamp(22px, 1vw + 18px, 26px);
+  line-height: 1.25;
+}
+.momento-texto p { margin-top: 2px; line-height: 1.5; }
+
+/* Computador: linha do tempo na horizontal */
+@media (min-width: 860px) {
+  .linha-do-tempo {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    max-width: none;
+  }
+  .momento {
+    grid-template-columns: 1fr;
+    grid-template-rows: 88px 34px auto;
+    justify-items: center;
+    row-gap: 10px;
+    padding: 0 8px;
+    text-align: center;
+  }
+  .icone { align-self: end; max-width: 104px; max-height: 76px; }
+  .trilho { width: 100%; font-size: inherit; }
+  .trilho::before {
+    top: 50%;
+    bottom: auto;
+    left: -8px;
+    right: -8px;
+    width: auto;
+    height: 1px;
+    transform: translateY(-50%);
+  }
+  .momento:first-child .trilho::before { top: 50%; left: 50%; }
+  .momento:last-child .trilho::before { height: 1px; right: 50%; }
+  .estrela { top: 50%; width: 13px; height: 13px; }
+  .momento-texto { max-width: 20ch; }
+}
+
+/* ---------- Relógio ---------- */
+.relogio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: 32rem;
+  margin: clamp(56px, 7vw, 88px) auto 0;
+  padding-top: clamp(32px, 4vw, 44px);
+  border-top: 1px solid var(--fio-vinho);
+  text-align: center;
+}
+.relogio-titulo { font-style: italic; font-size: 1.3em; line-height: 1.2; }
+.relogio-numeros {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(5px, 1.8vw, 20px);
+}
+.unidade { display: flex; flex-direction: column; align-items: center; }
+.num, .dois-pontos {
+  font-size: clamp(38px, 6vw, 70px);
+  font-weight: 500;
+  line-height: 1;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.dois-pontos { opacity: 0.45; }
+.rotulo {
+  margin-top: 8px;
+  font-style: italic;
+  font-size: 0.88em;
+  color: var(--vinho-suave);
+}
+.relogio-nota { font-style: italic; color: var(--vinho-suave); }
+
+/* ---------- Dress code ---------- */
+#dress-code .miolo { min-height: 26rem; }
+
+/* ---------- Presentes ---------- */
+.presente {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  column-gap: 18px;
+  align-items: center;
+}
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: clamp(28px, 3.4vw, 40px);
+}
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.62em 1.7em;
+  border: 1px solid var(--vinho);
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+.botao-cheio { background: var(--vinho); color: var(--branco); }
+.botao-cheio:hover { background: var(--vinho-profundo); }
+.botao-contorno { background: transparent; color: var(--vinho); }
+.botao-contorno:hover { background: rgba(97, 48, 50, 0.08); }
+.botao-largo { width: 100%; }
+.botao-claro { background: var(--papel); border-color: var(--papel); color: var(--vinho); }
+.botao-claro:hover { background: var(--branco); border-color: var(--branco); }
+.capa .botao-claro { margin-top: 6px; }
+.rodape-botao { margin-top: 18px; }
+
+/* ---------- Janela de presentes ---------- */
+.janela {
+  width: min(92vw, 440px);
+  max-height: 92svh;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: var(--papel);
+  color: var(--vinho);
+  box-shadow: 0 30px 80px -20px rgba(40, 16, 18, 0.6);
+}
+.janela::backdrop {
+  background: rgba(45, 20, 22, 0.62);
+  backdrop-filter: blur(3px);
+}
+.janela[open] { animation: surgir 0.22s ease-out; }
+@keyframes surgir {
+  from { transform: translateY(8px); opacity: 0.4; }
+  to   { transform: none; opacity: 1; }
+}
+.janela-miolo {
+  position: relative;
+  padding: clamp(28px, 6vw, 40px) clamp(22px, 6vw, 36px) clamp(24px, 5vw, 32px);
+}
+.passo { display: flex; flex-direction: column; gap: 14px; }
+.janela-titulo {
+  margin: 0;
+  padding-right: 32px;
+  font-family: var(--script);
+  font-weight: 400;
+  font-size: clamp(36px, 8vw, 44px);
+  line-height: 1.15;
+}
+.janela-sub { color: var(--vinho-suave); line-height: 1.5; }
+.janela-sub em { font-style: italic; color: var(--vinho); }
+
+.fechar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--vinho);
+  font: inherit;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+.fechar:hover { background: rgba(97, 48, 50, 0.08); }
+
+.opcoes { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+.opcao {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "nome seta" "desc seta";
+  align-items: center;
+  column-gap: 12px;
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid var(--fio-vinho);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--vinho);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.opcao:hover { border-color: var(--vinho); background: #fbf9f7; }
+.opcao-nome { grid-area: nome; font-weight: 600; font-size: 1.1em; line-height: 1.3; }
+.opcao-desc { grid-area: desc; font-style: italic; color: var(--vinho-suave); line-height: 1.4; }
+.opcao-seta { grid-area: seta; font-size: 1.3em; }
+
+.aviso {
+  min-height: 1.5em;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--vinho-suave);
+  text-align: center;
+}
+.aviso.codigo {
+  font-style: normal;
+  font-size: 0.8em;
+  word-break: break-all;
+  user-select: all;
+  text-align: left;
+}
+.qr {
+  display: grid;
+  grid-template-columns: 116px 1fr;
+  gap: 16px;
+  align-items: center;
+  padding: 14px;
+  border-radius: 6px;
+  background: #fff;
+}
+.qr img { width: 116px; height: 116px; }
+.qr p { font-style: italic; font-size: 0.92em; line-height: 1.45; color: var(--vinho-suave); }
+.recebedor { font-size: 0.92em; color: var(--vinho-suave); }
+.recebedor strong { font-weight: 600; color: var(--vinho); }
+.voltar {
+  align-self: flex-start;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: var(--vinho);
+  font: inherit;
+  font-style: italic;
+  text-decoration: underline;
+  text-decoration-color: var(--fio-vinho);
+  text-underline-offset: 0.22em;
+  cursor: pointer;
+}
+.voltar:hover { text-decoration-color: var(--vinho); }
+
+/* ---------- Rodapé ---------- */
+.rodape { padding: clamp(56px, 8vw, 88px) 22px; }
+.rodape-miolo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.rodape-nomes { font-family: var(--script); font-size: clamp(40px, 4.6vw, 56px); line-height: 1.2; }
+.rodape-data { letter-spacing: 0.08em; color: var(--branco-suave); }
+.rodape-topo { margin-top: 14px; font-style: italic; color: var(--branco-suave); }
+
+/* ---------- Telas médias e celular ----------
+   Capa volta à composição do convite: flores à esquerda, texto à direita. */
+@media (max-width: 899px) {
+  .flores-dir { display: none; }
+  .menu { display: none; }
+
+  .capa { justify-content: flex-start; min-height: 640px; }
+  .capa-conteudo {
+    align-items: flex-start;
+    max-width: none;
+    padding: 64px 20px 64px clamp(130px, 36vw, 300px);
+    text-align: left;
+  }
+  .nomes { align-items: flex-start; font-size: clamp(32px, 9.4vw, 64px); }
+  .nomes .e { padding-left: 0.2em; }
+  .data { flex-direction: column; justify-content: flex-start; gap: 0; }
+  .data .sep { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}

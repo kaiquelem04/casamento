@@ -354,7 +354,6 @@ a {
 .botao-largo { width: 100%; }
 .botao-claro { background: var(--papel); border-color: var(--papel); color: var(--vinho); }
 .botao-claro:hover { background: var(--branco); border-color: var(--branco); }
-.capa .botao-claro { margin-top: 6px; }
 .rodape-botao { margin-top: 18px; }
 
 /* ---------- Janela de presentes ---------- */

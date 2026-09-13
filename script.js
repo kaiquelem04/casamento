@@ -96,3 +96,41 @@ document.getElementById("copiar-pix").addEventListener("click", async () => {
     avisoPix.classList.add("codigo");
   }
 });
+
+
+// =========================================================
+// Transição entre as partes: revela cada bloco ao entrar na tela
+// =========================================================
+if (document.documentElement.classList.contains("js-anima")) {
+  const observador = new IntersectionObserver((entradas) => {
+    for (const e of entradas) {
+      if (e.isIntersecting) {
+        e.target.classList.add("visivel");
+        observador.unobserve(e.target);
+      }
+    }
+  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+
+  const blocos = [...document.querySelectorAll("[data-anima]")];
+  blocos.forEach((el) => observador.observe(el));
+
+  // Segurança extra (navegadores de apps às vezes falham no observador):
+  // ao rolar, revela tudo que já chegou na tela ou ficou para trás.
+  let agendado = false;
+  function conferir() {
+    agendado = false;
+    const limite = window.innerHeight * 0.95;
+    const noFim = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    for (const el of blocos) {
+      if (!el.classList.contains("visivel") && (noFim || el.getBoundingClientRect().top < limite)) {
+        el.classList.add("visivel");
+      }
+    }
+  }
+  window.addEventListener("scroll", () => {
+    if (!agendado) { agendado = true; requestAnimationFrame(conferir); }
+  }, { passive: true });
+  window.addEventListener("load", conferir);
+
+  window.animaPronta = true;
+}

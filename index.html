@@ -24,6 +24,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Pinyon+Script&display=swap">
   <link rel="stylesheet" href="estilo.css">
+  <script>
+    // Liga as transições entre seções só se o navegador suporta e a pessoa não pediu menos movimento.
+    // Se o script.js não carregar em 2,5 s, desliga tudo para o conteúdo nunca ficar escondido.
+    if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.documentElement.classList.add("js-anima");
+      setTimeout(function () { if (!window.animaPronta) document.documentElement.classList.remove("js-anima"); }, 2500);
+    }
+  </script>
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -65,10 +73,10 @@
     <!-- ============ Programação ============ -->
     <section class="secao papel" id="programacao" aria-labelledby="t-programacao">
       <div class="miolo">
-        <h2 id="t-programacao">Linha do tempo</h2>
+        <h2 id="t-programacao" data-anima>Linha do tempo</h2>
 
         <ol class="linha-do-tempo">
-          <li class="momento">
+          <li class="momento" data-anima>
             <img class="icone" src="img/icones/igreja.webp" alt="" width="249" height="360">
             <span class="trilho" aria-hidden="true"><svg class="estrela" viewBox="0 0 64 64"><path d="M32 0L42.18 21.82L64 32L42.18 42.18L32 64L21.82 42.18L0 32L21.82 21.82Z"/></svg></span>
             <div class="momento-texto">
@@ -76,7 +84,7 @@
               <p>Cerimônia na igreja <a href="https://maps.google.com/maps/place/data=!4m2!3m1!1s0x94cc88543a2c3bd7:0x20a7fb5d9fed7de4?entry=s&amp;sa=X&amp;ved=2ahUKEwiS2OWRpueWAxWaNrkGHdtUBzgQ4kB6BAgZEAA" target="_blank" rel="noopener">São Benedito, Capivari, Campos do Jordão</a></p>
             </div>
           </li>
-          <li class="momento">
+          <li class="momento" data-anima>
             <img class="icone" src="img/icones/aliancas.webp" alt="" width="360" height="163">
             <span class="trilho" aria-hidden="true"><svg class="estrela" viewBox="0 0 64 64"><path d="M32 0L42.18 21.82L64 32L42.18 42.18L32 64L21.82 42.18L0 32L21.82 21.82Z"/></svg></span>
             <div class="momento-texto">
@@ -84,7 +92,7 @@
               <p>SIM!!!</p>
             </div>
           </li>
-          <li class="momento">
+          <li class="momento" data-anima>
             <img class="icone" src="img/icones/convite.webp" alt="" width="360" height="278">
             <span class="trilho" aria-hidden="true"><svg class="estrela" viewBox="0 0 64 64"><path d="M32 0L42.18 21.82L64 32L42.18 42.18L32 64L21.82 42.18L0 32L21.82 21.82Z"/></svg></span>
             <div class="momento-texto">
@@ -92,7 +100,7 @@
               <p>Recepção e votos no espaço <a href="https://maps.google.com/maps?vet=10CAAQoqAOahcKEwj4zMfUsOqWAxUAAAAAHQAAAAAQBg..i&amp;sca_esv=20c391b09ad7e020&amp;pvq=Cg0vZy8xMXpkMDF6N25xIhoKFGVzcGHDp28gc2Fib3IgZSByYWl6EAIYAw&amp;lqi=ChRlc3Bhw6dvIHNhYm9yIGUgcmFpekiWvfyAsL6AgAhaMhAAEAEQAhADGAAYARgCGAMiFGVzcGHDp28gc2Fib3IgZSByYWl6KgoIAhAAEAEQAhADkgEKcmVzdGF1cmFudJoBRENpOURRVWxSUVVOdlpFTm9kSGxqUmpsdlQyMVNkVnB0WkRaWFJFcFBZakZyZEZWRk9YVldWWFJOVVRCNFpscFhZeEFC-gEECAAQKA&amp;fvr=1&amp;cs=0&amp;um=1&amp;ie=UTF-8&amp;fb=1&amp;gl=br&amp;sa=X&amp;ftid=0x94cc8700623f8f3f:0x38aa7822d86a6701" target="_blank" rel="noopener">Sabor &amp; Raiz</a></p>
             </div>
           </li>
-          <li class="momento">
+          <li class="momento" data-anima>
             <img class="icone" src="img/icones/jantar.webp" alt="" width="360" height="300">
             <span class="trilho" aria-hidden="true"><svg class="estrela" viewBox="0 0 64 64"><path d="M32 0L42.18 21.82L64 32L42.18 42.18L32 64L21.82 42.18L0 32L21.82 21.82Z"/></svg></span>
             <div class="momento-texto">
@@ -100,7 +108,7 @@
               <p>Jantar</p>
             </div>
           </li>
-          <li class="momento">
+          <li class="momento" data-anima>
             <img class="icone" src="img/icones/brinde.webp" alt="" width="311" height="316">
             <span class="trilho" aria-hidden="true"><svg class="estrela" viewBox="0 0 64 64"><path d="M32 0L42.18 21.82L64 32L42.18 42.18L32 64L21.82 42.18L0 32L21.82 21.82Z"/></svg></span>
             <div class="momento-texto">
@@ -110,7 +118,7 @@
           </li>
         </ol>
 
-        <div class="relogio" id="relogio">
+        <div class="relogio" id="relogio" data-anima>
           <p class="relogio-titulo">Faltam</p>
           <div class="relogio-numeros">
             <div class="unidade"><span class="num" id="rel-d">118</span><span class="rotulo">dias</span></div>
@@ -128,14 +136,14 @@
 
     <!-- ============ Dress code ============ -->
     <section class="secao vinho" id="dress-code" aria-labelledby="t-dress">
-      <div class="flores flores-dir" aria-hidden="true">
+      <div class="flores flores-dir" aria-hidden="true" data-anima>
         <div class="flor flor-topo"></div>
         <div class="flor flor-base"></div>
       </div>
       <div class="miolo">
         <div class="coluna">
-          <h2 id="t-dress">Dress code</h2>
-          <div class="texto">
+          <h2 id="t-dress" data-anima>Dress code</h2>
+          <div class="texto" data-anima>
             <p>Para celebrar esse dia com a gente, sugerimos um traje social, elegante e sem excessos.</p>
             <p>Queremos uma celebração leve e sofisticada, por isso, escolha um look em que você se sinta bonito(a), confortável e à vontade para aproveitar cada momento conosco.</p>
             <p>Pedimos apenas que o branco e tons muito próximos ao branco sejam reservados à noiva.</p>
@@ -148,8 +156,8 @@
     <section class="secao papel" id="presentes" aria-labelledby="t-presentes">
       <div class="miolo">
         <div class="coluna">
-          <h2 id="t-presentes">Presentes</h2>
-          <div class="texto">
+          <h2 id="t-presentes" data-anima>Presentes</h2>
+          <div class="texto" data-anima>
             <div class="presente">
               <img src="img/icones/presente.webp" alt="" width="307" height="350">
               <p>Como estamos começando uma nova vida juntos e de mudança para outro estado, decidimos não receber presentes físicos.</p>
@@ -157,7 +165,7 @@
             <p>Se você desejar nos presentear, ficaremos muito felizes com uma contribuição via Pix, que nos ajudará a construir nosso novo lar e começar essa nova fase juntos.</p>
             <p>Mais do que qualquer presente, ter você conosco nesse dia é o que realmente importa para nós!</p>
           </div>
-          <div class="acoes">
+          <div class="acoes" data-anima>
             <button class="botao botao-cheio" id="presentear" type="button" aria-haspopup="dialog">Presentear os noivos</button>
           </div>
         </div>
@@ -206,7 +214,7 @@
 
   <!-- ============ Rodapé ============ -->
   <footer class="rodape vinho">
-    <div class="miolo rodape-miolo">
+    <div class="miolo rodape-miolo" data-anima>
       <p class="rodape-nomes">Kaique &amp; Maê</p>
       <p class="rodape-data">09 · 01 · 2027 — Campos do Jordão</p>
       <a class="botao botao-claro rodape-botao" href="https://docs.google.com/forms/d/e/1FAIpQLSfrG4dv8Hcm9rx-ym1xa2u4WnbqPtX0x_8tNT4JmWpkgHbNkg/viewform?usp=publish-editor" target="_blank" rel="noopener">Confirme sua presença</a>

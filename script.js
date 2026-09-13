@@ -3,7 +3,7 @@
 // =========================================================
 
 // Lista de presentes na Amazon
-const LINK_LISTA = "https://www.amazon.com.br/hz/wishlist/dl/invite/AQICAHild4Vpadjqcz7bdgUf6Qu6-OaRt7P_FJRNNbyMlg-OQwH-24u9K4ENaTgUEQIfK2iWAAAAkTCBjgYJKoZIhvcNAQcGoIGAMH4CAQAweQYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAyopLc5K0h2Acy2OkkCARCATNDBCK9lRDltIekwuf8lUJj0XRXV0Q2Y-kE9VJkv9H0keUHl5Xsm4P8oOs3wyKEokRwWxjavhDk5m8229xR0GzhGmdbziUFdt6Xz4-o?ref_=wl_share";
+const LINK_LISTA = "https://www.amazon.com.br/hz/wishlist/ls/1AAWXC4XKUW7O?ref_=wl_share";
 
 // Pix "copia e cola" (sem valor fixo — o convidado escolhe quanto doar).
 // Se trocar este código, gere um QR code novo para img/pix-qr.svg.

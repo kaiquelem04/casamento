@@ -65,12 +65,7 @@
       text-align: center;
     }
     .topo-conteudo { position: relative; z-index: 1; }
-    .topo-sobre {
-      margin-bottom: 6px;
-      font-style: italic;
-      letter-spacing: 0.06em;
-      color: var(--branco-suave);
-    }
+    .topo-sobre { margin-bottom: 6px; font-style: italic; letter-spacing: 0.06em; color: var(--branco-suave); }
     .topo-sobre a { text-decoration-color: var(--fio-claro); }
     .topo-sobre a:hover { text-decoration-color: var(--branco); }
     h1 {
@@ -107,55 +102,74 @@
 
     /* ---------- Miolo ---------- */
     .miolo {
-      max-width: 880px;
+      max-width: 1120px;
       margin: 0 auto;
       padding: clamp(40px, 6vw, 72px) 16px clamp(56px, 8vw, 96px);
     }
 
-    /* ---------- Contador (também filtra a lista) ---------- */
+    /* ---------- Contador (também filtra as listas) ---------- */
     .contador { text-align: center; }
     .contador-numeros {
-      display: flex;
-      justify-content: center;
-      align-items: stretch;
-      gap: clamp(4px, 2.4vw, 24px);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-width: 22rem;
+      margin: 0 auto;
+    }
+    @media (min-width: 600px) {
+      .contador-numeros { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 44rem; }
     }
     .unidade {
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-width: 0;
-      padding: 8px clamp(8px, 2.4vw, 18px) 10px;
+      padding: 10px 6px 12px;
       border: 0;
-      border-bottom: 1.5px solid transparent;
-      border-radius: 6px 6px 0 0;
+      border-radius: 6px;
       background: transparent;
       color: var(--vinho);
       font: inherit;
       cursor: pointer;
-      transition: background-color 0.2s, border-color 0.2s;
+      transition: background-color 0.2s;
     }
+    /* fio entre os números */
+    .unidade:nth-child(even)::before,
+    .unidade + .unidade::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 18%;
+      bottom: 22%;
+      width: 1px;
+      background: var(--fio-vinho);
+    }
+    @media (max-width: 599px) { .unidade:nth-child(3)::before { display: none; } }
     .unidade:hover { background: rgba(97, 48, 50, 0.06); }
-    .unidade[aria-pressed="true"] { border-bottom-color: var(--vinho); }
+    .unidade::after {
+      content: "";
+      position: absolute;
+      left: 26%;
+      right: 26%;
+      bottom: 2px;
+      height: 1.5px;
+      background: var(--vinho);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .unidade[aria-pressed="true"]::after { opacity: 1; }
     .num {
-      font-size: clamp(46px, 10vw, 78px);
+      font-size: clamp(44px, 9vw, 74px);
       font-weight: 500;
       line-height: 1;
       font-variant-numeric: lining-nums tabular-nums;
     }
-    .rotulo {
-      margin-top: 8px;
-      font-style: italic;
-      font-size: 0.9em;
-      line-height: 1.2;
-      color: var(--vinho-suave);
-    }
-    .divisor { width: 1px; margin: 10px 0 14px; background: var(--fio-vinho); }
+    .rotulo { margin-top: 8px; font-style: italic; font-size: 0.9em; line-height: 1.2; color: var(--vinho-suave); }
 
     .barra {
       max-width: 30rem;
       height: 4px;
-      margin: 24px auto 0;
+      margin: 22px auto 0;
       border-radius: 999px;
       background: var(--fio-vinho);
       overflow: hidden;
@@ -169,10 +183,18 @@
       transition: width 0.6s ease;
     }
     .contador-nota { margin-top: 10px; font-style: italic; color: var(--vinho-suave); }
+    .meia {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 0.45em 1.3em;
+      border: 1px solid var(--fio-vinho);
+      border-radius: 999px;
+      line-height: 1.4;
+      text-wrap: balance;
+    }
+    .meia strong { font-weight: 600; font-variant-numeric: lining-nums; }
 
-    /* ---------- Lista ---------- */
-    .lista-bloco { margin-top: clamp(30px, 4.6vw, 44px); }
-
+    /* ---------- Busca ---------- */
     .campo {
       width: 100%;
       padding: 0.6em 1.15em;
@@ -181,44 +203,68 @@
       background: var(--branco);
       color: var(--vinho);
       font: inherit;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
     .campo::placeholder { font-style: italic; color: var(--vinho-suave); opacity: 1; }
     .campo:hover, .campo:focus { border-color: var(--vinho); }
     .campo:focus { outline: none; box-shadow: 0 0 0 3px rgba(97, 48, 50, 0.12); }
+    .busca { max-width: 34rem; margin: clamp(30px, 4.4vw, 42px) auto 0; }
 
-    .novo { display: flex; gap: 10px; margin-top: 12px; }
-    .novo .campo { flex: 1; min-width: 0; }
+    /* ---------- As duas listas ---------- */
+    .listas {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: clamp(36px, 5vw, 48px) 28px;
+      margin-top: clamp(28px, 4vw, 40px);
+    }
+    @media (min-width: 880px) {
+      .listas { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+    }
+    .lado-topo { margin-bottom: 12px; text-align: center; }
+    .lado h2 {
+      margin: 0;
+      font-family: var(--script);
+      font-weight: 400;
+      font-size: clamp(36px, 4.4vw, 50px);
+      line-height: 1.15;
+    }
+    .lado-resumo { font-style: italic; color: var(--vinho-suave); }
 
     .lista {
       list-style: none;
-      margin: 16px 0 0;
+      margin: 0;
       padding: 4px 0;
       border: 1px solid var(--linha);
-      border-radius: 6px;
+      border-radius: 6px 6px 0 0;
       background: var(--branco);
-    }
-    @media (min-width: 760px) {
-      .lista { columns: 2; column-gap: 0; column-rule: 1px solid var(--linha); }
     }
     .convidado {
       display: flex;
       align-items: center;
-      break-inside: avoid;
+      gap: 4px;
+      padding-left: 10px;
       border-bottom: 1px solid var(--linha);
     }
     .convidado:last-child { border-bottom: 0; }
+    .pos {
+      flex: none;
+      width: 2ch;
+      font-size: 0.8em;
+      text-align: right;
+      color: var(--vinho-suave);
+      font-variant-numeric: lining-nums tabular-nums;
+    }
     .marca {
       flex: 1;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       min-width: 0;
       min-height: 50px;
-      padding: 10px 18px;
+      padding: 8px 6px 8px 8px;
       cursor: pointer;
     }
-    .marca input {
+    .caixa {
       appearance: none;
       -webkit-appearance: none;
       flex: none;
@@ -233,7 +279,7 @@
       cursor: pointer;
       transition: background-color 0.15s;
     }
-    .marca input::before {
+    .caixa::before {
       content: "";
       width: 10px;
       height: 5px;
@@ -242,71 +288,113 @@
       transform: translateY(-1px) rotate(-45deg);
       opacity: 0;
     }
-    .marca input:checked { background: var(--vinho); }
-    .marca input:checked::before { opacity: 1; }
-    .marca:hover input:not(:checked) { background: rgba(97, 48, 50, 0.08); }
+    .caixa:checked { background: var(--vinho); }
+    .caixa:checked::before { opacity: 1; }
+    .marca:hover .caixa:not(:checked) { background: rgba(97, 48, 50, 0.08); }
     .nome { line-height: 1.3; overflow-wrap: anywhere; }
     .convidado:not(.sim) .nome { color: var(--vinho-suave); }
 
+    /* segundo check: criança */
+    .tag {
+      flex: none;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.12em 0.75em 0.18em;
+      border: 1px solid var(--fio-vinho);
+      border-radius: 999px;
+      font-size: 0.8em;
+      font-style: italic;
+      line-height: 1.3;
+      color: var(--vinho-suave);
+      cursor: pointer;
+      opacity: 0.55;
+      transition: opacity 0.15s, background-color 0.15s, color 0.15s;
+    }
+    .tag input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+    .tag:hover, .tag:focus-within { opacity: 1; }
+    .tag:focus-within { outline: 1.5px solid var(--vinho); outline-offset: 2px; }
+    .kid .tag { opacity: 1; border-color: var(--vinho); background: var(--vinho); color: var(--branco); font-style: normal; }
+
     .remover {
       flex: none;
-      width: 40px;
-      height: 40px;
-      margin-right: 8px;
+      width: 38px;
+      height: 38px;
+      margin-right: 4px;
       border: 0;
       border-radius: 50%;
       background: transparent;
       color: var(--vinho-suave);
       font: inherit;
-      font-size: 26px;
+      font-size: 24px;
       line-height: 1;
       cursor: pointer;
+      opacity: 0.6;
     }
-    .remover:hover { background: rgba(97, 48, 50, 0.08); color: var(--vinho); }
+    .remover:hover, .remover:focus-visible { opacity: 1; background: rgba(97, 48, 50, 0.08); color: var(--vinho); }
 
-    .vazio { padding: 28px 16px; font-style: italic; text-align: center; color: var(--vinho-suave); }
-    .dica { margin-top: 14px; font-style: italic; font-size: 0.92em; text-align: center; color: var(--vinho-suave); }
+    .vazio {
+      padding: 22px 16px;
+      border: 1px solid var(--linha);
+      border-bottom: 0;
+      border-radius: 6px 6px 0 0;
+      background: var(--branco);
+      font-style: italic;
+      text-align: center;
+      color: var(--vinho-suave);
+    }
 
-    /* ---------- Botões (iguais aos do site) ---------- */
+    /* adicionar convidado, colado no fim de cada lista */
+    .novo {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--linha);
+      border-top: 1px dashed var(--fio-vinho);
+      border-radius: 0 0 6px 6px;
+      background: rgba(255, 255, 255, 0.55);
+    }
+    .novo .campo { flex: 1 1 12rem; min-width: 0; padding: 0.5em 1em; }
+    .novo .tag { opacity: 0.8; font-size: 0.85em; padding: 0.3em 0.9em 0.35em; }
+    .novo .tag:has(input:checked) { opacity: 1; border-color: var(--vinho); background: var(--vinho); color: var(--branco); font-style: normal; }
+
     .botao {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.62em 1.6em;
+      padding: 0.5em 1.4em;
       border: 1px solid var(--vinho);
       border-radius: 999px;
+      background: var(--vinho);
+      color: var(--branco);
       font: inherit;
       font-weight: 600;
       letter-spacing: 0.04em;
-      text-decoration: none;
       cursor: pointer;
-      transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+      transition: background-color 0.2s;
     }
-    .botao-cheio { background: var(--vinho); color: var(--branco); }
-    .botao-cheio:hover { background: var(--vinho-profundo); }
-    .botao-claro { background: var(--papel); border-color: var(--papel); color: var(--vinho); }
-    .botao-claro:hover { background: var(--branco); border-color: var(--branco); }
-    .botao-largo { width: 100%; }
-    .botao:disabled { opacity: 0.6; cursor: progress; }
+    .botao:hover { background: var(--vinho-profundo); }
 
     /* ---------- Rodapé ---------- */
     .rodape {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       padding: clamp(48px, 7vw, 72px) 22px;
       background: var(--vinho);
       color: var(--branco);
       text-align: center;
     }
     .rodape-nomes { font-family: var(--script); font-size: clamp(40px, 4.6vw, 54px); line-height: 1.2; }
-    .rodape-edicao { max-width: 30ch; font-style: italic; color: var(--branco-suave); }
+    .rodape-texto { max-width: 34ch; font-style: italic; color: var(--branco-suave); }
     .rodape-link { margin-top: 6px; font-style: italic; color: var(--branco-suave); text-decoration-color: var(--fio-claro); }
     .rodape-link:hover { color: var(--branco); text-decoration-color: var(--branco); }
 
     /* ---------- Aviso de salvamento ---------- */
-    .aviso-flutuante {
+    .aviso {
       position: fixed;
       left: 50%;
       bottom: 18px;
@@ -321,64 +409,7 @@
       box-shadow: 0 14px 40px -12px rgba(40, 16, 18, 0.55);
       transform: translateX(-50%);
     }
-    .aviso-flutuante.erro { border-radius: 14px; background: var(--branco); color: var(--vinho); border: 1px solid var(--vinho); }
-
-    /* ---------- Janela do modo edição ---------- */
-    .janela {
-      width: min(92vw, 460px);
-      max-height: 92svh;
-      padding: 0;
-      border: 0;
-      border-radius: 6px;
-      background: var(--papel);
-      color: var(--vinho);
-      box-shadow: 0 30px 80px -20px rgba(40, 16, 18, 0.6);
-    }
-    .janela::backdrop { background: rgba(45, 20, 22, 0.62); backdrop-filter: blur(3px); }
-    .janela-miolo {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      padding: clamp(28px, 6vw, 38px) clamp(20px, 6vw, 34px) clamp(22px, 5vw, 30px);
-    }
-    .janela-titulo {
-      margin: 0;
-      padding-right: 32px;
-      font-family: var(--script);
-      font-weight: 400;
-      font-size: clamp(36px, 8vw, 44px);
-      line-height: 1.15;
-    }
-    .janela-sub { line-height: 1.5; color: var(--vinho-suave); }
-    .passos {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin: 0;
-      padding-left: 1.3em;
-      font-size: 0.95em;
-      line-height: 1.45;
-    }
-    .passos em { font-style: italic; font-weight: 600; }
-    .campo-chave { border-radius: 6px; font-family: ui-monospace, Consolas, monospace; font-size: 0.8em; padding: 0.85em 1em; }
-    .aviso { min-height: 1.4em; font-style: italic; line-height: 1.45; text-align: center; color: var(--vinho-suave); }
-    .fechar {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      width: 40px;
-      height: 40px;
-      border: 0;
-      border-radius: 50%;
-      background: transparent;
-      color: var(--vinho);
-      font: inherit;
-      font-size: 28px;
-      line-height: 1;
-      cursor: pointer;
-    }
-    .fechar:hover { background: rgba(97, 48, 50, 0.08); }
+    .aviso.erro { border: 1px solid var(--vinho); border-radius: 14px; background: var(--branco); color: var(--vinho); }
 
     @media (prefers-reduced-motion: reduce) {
       * { transition: none !important; }
@@ -405,199 +436,156 @@
   <main>
     <div class="miolo">
 
-      <!-- Contador: os três números também filtram a lista -->
+      <!-- Contador: os números também filtram as listas -->
       <section class="contador" aria-labelledby="t-contador">
         <h2 class="visualmente-oculto" id="t-contador">Contador de convidados</h2>
-        <div class="contador-numeros" role="group" aria-label="Filtrar a lista">
+        <div class="contador-numeros" role="group" aria-label="Filtrar as listas">
           <button class="unidade" type="button" data-filtro="confirmados" aria-pressed="false">
             <span class="num" id="n-confirmados">–</span><span class="rotulo">confirmados</span>
           </button>
-          <span class="divisor" aria-hidden="true"></span>
           <button class="unidade" type="button" data-filtro="pendentes" aria-pressed="false">
             <span class="num" id="n-pendentes">–</span><span class="rotulo">pendentes</span>
           </button>
-          <span class="divisor" aria-hidden="true"></span>
+          <button class="unidade" type="button" data-filtro="criancas" aria-pressed="false">
+            <span class="num" id="n-criancas">–</span><span class="rotulo">crianças</span>
+          </button>
           <button class="unidade" type="button" data-filtro="todos" aria-pressed="true">
             <span class="num" id="n-total">–</span><span class="rotulo">no total</span>
           </button>
         </div>
         <div class="barra" aria-hidden="true"><span class="barra-cheia" id="barra"></span></div>
         <p class="contador-nota" id="nota" role="status">Carregando a lista…</p>
+        <p class="meia" id="meia" hidden></p>
       </section>
 
-      <section class="lista-bloco" aria-labelledby="t-lista">
-        <h2 class="visualmente-oculto" id="t-lista">Convidados</h2>
+      <div class="busca">
         <label class="visualmente-oculto" for="busca">Buscar convidado</label>
         <input class="campo" id="busca" type="search" placeholder="Buscar convidado" autocomplete="off" spellcheck="false">
+      </div>
 
-        <form class="novo" id="form-novo" hidden>
-          <label class="visualmente-oculto" for="novo-nome">Nome do novo convidado</label>
-          <input class="campo" id="novo-nome" maxlength="80" placeholder="Nome do novo convidado" autocomplete="off" required>
-          <button class="botao botao-cheio" type="submit">Adicionar</button>
-        </form>
+      <div class="listas">
+        <section class="lado" data-lista="Kaique" aria-labelledby="t-kaique">
+          <header class="lado-topo">
+            <h2 id="t-kaique">Convidados do Kaique</h2>
+            <p class="lado-resumo" data-resumo></p>
+          </header>
+          <ol class="lista" data-itens></ol>
+          <p class="vazio" data-vazio hidden></p>
+          <form class="novo" data-novo>
+            <label class="visualmente-oculto" for="novo-kaique">Nome do novo convidado do Kaique</label>
+            <input class="campo" id="novo-kaique" maxlength="80" placeholder="Adicionar convidado" autocomplete="off" required>
+            <label class="tag"><input type="checkbox" data-novo-crianca>criança</label>
+            <button class="botao" type="submit">Adicionar</button>
+          </form>
+        </section>
 
-        <ul class="lista" id="lista"></ul>
-        <p class="vazio" id="vazio" hidden></p>
-        <p class="dica" id="dica"></p>
-        <noscript><p class="vazio">Ative o JavaScript do navegador para ver a lista.</p></noscript>
-      </section>
+        <section class="lado" data-lista="Maê" aria-labelledby="t-mae">
+          <header class="lado-topo">
+            <h2 id="t-mae">Convidados da Maê</h2>
+            <p class="lado-resumo" data-resumo></p>
+          </header>
+          <ol class="lista" data-itens></ol>
+          <p class="vazio" data-vazio hidden></p>
+          <form class="novo" data-novo>
+            <label class="visualmente-oculto" for="novo-mae">Nome do novo convidado da Maê</label>
+            <input class="campo" id="novo-mae" maxlength="80" placeholder="Adicionar convidado" autocomplete="off" required>
+            <label class="tag"><input type="checkbox" data-novo-crianca>criança</label>
+            <button class="botao" type="submit">Adicionar</button>
+          </form>
+        </section>
+      </div>
+      <noscript><p class="contador-nota">Ative o JavaScript do navegador para ver a lista.</p></noscript>
 
     </div>
   </main>
 
   <footer class="rodape">
     <p class="rodape-nomes">Kaique &amp; Maê</p>
-    <p class="rodape-edicao" id="rodape-edicao">Só leitura neste aparelho.</p>
-    <button class="botao botao-claro" id="botao-edicao" type="button">Ativar modo edição</button>
+    <p class="rodape-texto">Tudo o que vocês marcam aqui é salvo na hora na planilha da lista.</p>
     <a class="rodape-link" href="../">Ver o site do casamento</a>
   </footer>
 
-  <p class="aviso-flutuante" id="aviso" role="status" aria-live="polite" hidden></p>
-
-  <dialog class="janela" id="janela-edicao" aria-labelledby="t-edicao">
-    <form class="janela-miolo" id="form-chave">
-      <button class="fechar" type="button" data-fechar aria-label="Fechar">×</button>
-      <h3 class="janela-titulo" id="t-edicao">Modo edição</h3>
-      <p class="janela-sub">Para marcar presenças e mexer na lista por aqui, o GitHub pede uma chave de acesso. Ela fica salva só neste aparelho.</p>
-      <ol class="passos">
-        <li>Abra <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">a página de criar chave no GitHub</a>.</li>
-        <li>Dê um nome (ex.: <em>lista de convidados</em>) e, em <em>Expiration</em>, escolha uma data depois do casamento.</li>
-        <li>Em <em>Repository access</em>, marque <em>Only select repositories</em> e escolha <em>casamento</em>.</li>
-        <li>Em <em>Permissions</em>, adicione <em>Contents</em> com acesso <em>Read and write</em>.</li>
-        <li>Clique em <em>Generate token</em>, copie a chave e cole aqui:</li>
-      </ol>
-      <label class="visualmente-oculto" for="chave">Chave de acesso do GitHub</label>
-      <input class="campo campo-chave" id="chave" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…" required>
-      <button class="botao botao-cheio botao-largo" id="ativar" type="submit">Ativar edição</button>
-      <p class="aviso" id="aviso-chave" role="status"></p>
-    </form>
-  </dialog>
+  <p class="aviso" id="aviso" role="status" aria-live="polite" hidden></p>
 
   <script>
     // =========================================================
-    // Onde a lista fica guardada: arquivo convidados.json no ramo
-    // "lista-convidados" do repositório (fora do site, então mexer
-    // na lista não republica o site do casamento).
+    // A lista fica numa planilha do Google; o script da planilha
+    // (convidados/planilha.gs) responde neste endereço.
     // =========================================================
-    const REPO = "kaiquelem04/casamento";
-    const RAMO = "lista-convidados";
-    const ARQUIVO = "convidados.json";
-    const API = `https://api.github.com/repos/${REPO}/contents/${ARQUIVO}`;
-    const RAW = `https://raw.githubusercontent.com/${REPO}/${RAMO}/${ARQUIVO}`;
-    const CHAVE_LOCAL = "lista-convidados.chave";
+    const URL_PLANILHA = "https://script.google.com/macros/s/AKfycbzE-4T8pi51u4I3YMBzHeU4QJc81sbI7hPtWt8xT-9G0jwKrpnCtz6wXXrLA2f6Fwdj/exec";
+
+    // para testar no computador: ?api=http://localhost:PORTA
+    const parametros = new URLSearchParams(location.search);
+    const LOCAL = ["localhost", "127.0.0.1"].includes(location.hostname);
+    const API = (LOCAL && parametros.get("api")) || URL_PLANILHA;
+    const LISTAS = ["Kaique", "Maê"];
 
     const $ = (id) => document.getElementById(id);
     const el = {
-      confirmados: $("n-confirmados"), pendentes: $("n-pendentes"), total: $("n-total"),
-      barra: $("barra"), nota: $("nota"), busca: $("busca"), lista: $("lista"),
-      vazio: $("vazio"), dica: $("dica"), formNovo: $("form-novo"), novoNome: $("novo-nome"),
-      rodapeEdicao: $("rodape-edicao"), botaoEdicao: $("botao-edicao"), aviso: $("aviso"),
-      janela: $("janela-edicao"), formChave: $("form-chave"), campoChave: $("chave"),
-      ativar: $("ativar"), avisoChave: $("aviso-chave"),
+      confirmados: $("n-confirmados"), pendentes: $("n-pendentes"), criancas: $("n-criancas"), total: $("n-total"),
+      barra: $("barra"), nota: $("nota"), meia: $("meia"), busca: $("busca"), aviso: $("aviso"),
     };
+    const lados = Object.fromEntries([...document.querySelectorAll(".lado")].map((s) => [s.dataset.lista, {
+      secao: s,
+      itens: s.querySelector("[data-itens]"),
+      resumo: s.querySelector("[data-resumo]"),
+      vazio: s.querySelector("[data-vazio]"),
+      form: s.querySelector("[data-novo]"),
+    }]));
 
     // ---------- estado ----------
-    let convidados = [];          // o que aparece na tela
-    let base = null;              // última versão confirmada no GitHub: { lista, sha }
-    let atrasada = false;         // true quando veio do espelho (pode atrasar alguns minutos)
+    let convidados = [];       // na ordem da planilha
     let filtro = "todos";
     let carregadoEm = 0;
-    let pendentes = 0;            // mudanças esperando para salvar
+    let pendentes = 0;         // mudanças esperando resposta da planilha
     let fila = Promise.resolve();
 
-    // ---------- chave guardada no aparelho ----------
-    let chaveMemoria = null;
-    function lerChave() {
-      try { return localStorage.getItem(CHAVE_LOCAL) || chaveMemoria; } catch { return chaveMemoria; }
-    }
-    function guardarChave(valor) {
-      chaveMemoria = valor;
-      try { localStorage.setItem(CHAVE_LOCAL, valor); } catch { /* fica só nesta aba */ }
-    }
-    function apagarChave() {
-      chaveMemoria = null;
-      try { localStorage.removeItem(CHAVE_LOCAL); } catch { /* nada a fazer */ }
-    }
-
     // ---------- utilidades ----------
-    const colar = new Intl.Collator("pt-BR", { sensitivity: "base", numeric: true });
-    const porNome = (a, b) => colar.compare(a.nome, b.nome) || a.id.localeCompare(b.id);
     const semAcento = (t) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
     const limparNome = (t) => t.replace(/\s+/g, " ").trim();
-
-    function paraBase64(texto) {
-      const bytes = new TextEncoder().encode(texto);
-      let bin = "";
-      for (const b of bytes) bin += String.fromCharCode(b);
-      return btoa(bin);
-    }
-    function deBase64(b64) {
-      const bin = atob(b64.replace(/\s/g, ""));
-      return new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));
-    }
+    const numero = (n) => n.toLocaleString("pt-BR", { maximumFractionDigits: 1 });
+    const meia = (grupo) => grupo.reduce((s, c) => s + (c.crianca ? 0.5 : 1), 0);
+    const doLado = (lista) => (lista === "Kaique" ? "do Kaique" : "da Maê");
     function novoId() {
       const n = new Uint8Array(4);
       crypto.getRandomValues(n);
       return [...n].map((b) => b.toString(16).padStart(2, "0")).join("");
     }
-    // um convidado por linha: fica fácil de ler e de editar à mão no GitHub
-    function serializar(lista) {
-      const linhas = [...lista].sort(porNome)
-        .map((c) => "  " + JSON.stringify({ id: c.id, nome: c.nome, confirmado: !!c.confirmado }));
-      return "[\n" + linhas.join(",\n") + "\n]\n";
-    }
     function validar(lista) {
-      if (!Array.isArray(lista)) throw new Error("arquivo da lista inválido");
+      if (!Array.isArray(lista)) throw new Error("resposta inválida da planilha");
       return lista
-        .filter((c) => c && typeof c.nome === "string")
-        .map((c) => ({ id: String(c.id || novoId()), nome: limparNome(c.nome), confirmado: c.confirmado === true }));
+        .filter((c) => c && typeof c.nome === "string" && c.id)
+        .map((c) => ({
+          id: String(c.id),
+          lista: LISTAS.includes(c.lista) ? c.lista : "Maê",
+          nome: limparNome(c.nome),
+          confirmado: c.confirmado === true,
+          crianca: c.crianca === true,
+        }));
     }
+    const mesmaLista = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
-    class ErroGitHub extends Error {
-      constructor(status) { super("GitHub respondeu " + status); this.status = status; }
-    }
-    function cabecalhos(extra) {
-      const h = { Accept: "application/vnd.github+json", ...extra };
-      const chave = lerChave();
-      if (chave) h.Authorization = "Bearer " + chave;
-      return h;
-    }
-
-    // ---------- leitura ----------
-    async function lerDaApi() {
-      const r = await fetch(`${API}?ref=${RAMO}`, { headers: cabecalhos(), cache: "no-store" });
-      if (!r.ok) throw new ErroGitHub(r.status);
+    // ---------- conversa com a planilha ----------
+    // sem cabeçalhos especiais, para o navegador não barrar o pedido (CORS)
+    async function pedir(op) {
+      if (!API) throw new Error("planilha não configurada");
+      const r = op
+        ? await fetch(API, { method: "POST", body: JSON.stringify(op), headers: { "Content-Type": "text/plain;charset=utf-8" } })
+        : await fetch(`${API}?t=${Date.now()}`, { cache: "no-store" });
+      if (!r.ok) throw new Error("a planilha respondeu " + r.status);
       const j = await r.json();
-      return { lista: validar(JSON.parse(deBase64(j.content))), sha: j.sha };
-    }
-
-    async function baixar() {
-      try {
-        return { ...(await lerDaApi()), atrasada: false };
-      } catch (erro) {
-        if (erro.status === 401 && lerChave()) {
-          // chave vencida ou apagada no GitHub: volta para só leitura
-          apagarChave();
-          atualizarModo();
-          mostrarAviso("A chave de edição não vale mais. Ative o modo edição de novo.", "erro", 7000);
-          try { return { ...(await lerDaApi()), atrasada: false }; } catch { /* tenta o espelho */ }
-        }
-        // limite de consultas do GitHub ou falha na API: usa o espelho do arquivo
-        const r = await fetch(`${RAW}?t=${Date.now()}`, { cache: "no-store" });
-        if (!r.ok) throw erro;
-        return { lista: validar(await r.json()), sha: null, atrasada: true };
-      }
+      if (!j.ok) throw new Error(j.erro || "erro na planilha");
+      return validar(j.convidados);
     }
 
     async function carregar({ silencioso = false } = {}) {
       try {
-        const d = await baixar();
+        const lista = await pedir();
         if (pendentes) return;              // chegou mudança no meio do caminho: não sobrescreve
-        base = { lista: d.lista, sha: d.sha };
-        convidados = d.lista;
-        atrasada = d.atrasada;
+        const mudou = !mesmaLista(lista, convidados);
+        convidados = lista;
         carregadoEm = Date.now();
-        renderizar();
+        if (mudou || !silencioso) renderizar();
       } catch (erro) {
         if (!silencioso || !convidados.length) {
           el.nota.textContent = "Não foi possível carregar a lista. Confira a internet e recarregue a página.";
@@ -605,165 +593,128 @@
       }
     }
 
-    // ---------- gravação ----------
-    function aplicar(lista, op) {
-      const existe = lista.find((c) => c.id === op.id);
-      if (op.tipo === "marcar") {
-        if (!existe || existe.confirmado === op.valor) return null;
-        return lista.map((c) => (c.id === op.id ? { ...c, confirmado: op.valor } : c));
-      }
-      if (op.tipo === "adicionar") {
-        if (existe) return null;
-        return [...lista, { id: op.id, nome: op.nome, confirmado: false }];
-      }
-      if (op.tipo === "remover") {
-        if (!existe) return null;
-        return lista.filter((c) => c.id !== op.id);
-      }
-      return null;
-    }
-
-    async function enviar(op) {
-      for (let tentativa = 0; tentativa < 4; tentativa++) {
-        // sem versão confiável (ou alguém salvou ao mesmo tempo): busca a mais nova
-        if (!base || !base.sha) {
-          const d = await lerDaApi();
-          base = { lista: d.lista, sha: d.sha };
-        }
-        const nova = aplicar(base.lista, op);
-        if (!nova) return;                  // já estava assim no GitHub
-        const r = await fetch(API, {
-          method: "PUT",
-          headers: cabecalhos({ "Content-Type": "application/json" }),
-          body: JSON.stringify({
-            message: op.mensagem,
-            content: paraBase64(serializar(nova)),
-            sha: base.sha,
-            branch: RAMO,
-          }),
-        });
-        if (r.ok) {
-          const j = await r.json();
-          base = { lista: nova, sha: j.content.sha };
-          return;
-        }
-        if (r.status === 409 || r.status === 422) { base = null; continue; }
-        throw new ErroGitHub(r.status);
-      }
-      throw new Error("conflito");
-    }
-
+    // mudanças vão uma de cada vez; a tela já mostra o resultado antes
     function salvar(op) {
       pendentes++;
       mostrarAviso("Salvando…");
       fila = fila
-        .then(() => enviar(op))
-        .then(() => {
+        .then(() => pedir(op))
+        .then((lista) => {
           pendentes--;
           if (!pendentes) {
-            // se a outra pessoa mudou algo enquanto isso, mostra a versão do GitHub
-            const mudou = serializar(base.lista) !== serializar(convidados);
-            convidados = base.lista;
-            atrasada = false;
+            const mudou = !mesmaLista(lista, convidados);   // a outra pessoa mexeu enquanto isso
+            convidados = lista;
             carregadoEm = Date.now();
-            if (mudou) renderizar(); else atualizarContador();
-            mostrarAviso("Salvo", "ok", 1800);
+            if (mudou) renderizar();
+            mostrarAviso("Salvo", "ok", 1600);
           }
         })
         .catch(async (erro) => {
           pendentes--;
-          mostrarAviso(mensagemErro(erro), "erro", 8000);
-          base = null;
-          if (!pendentes) { await carregar({ silencioso: true }); }
+          const semRede = erro instanceof TypeError;
+          mostrarAviso(semRede ? "Sem conexão. A última mudança não foi salva." : "Não foi possível salvar a última mudança. Tente de novo.", "erro", 7000);
+          if (!pendentes) await carregar();
         });
-    }
-
-    function mensagemErro(erro) {
-      if (erro.status === 401) {
-        apagarChave();
-        atualizarModo();
-        return "A chave de edição não vale mais. Ative o modo edição de novo.";
-      }
-      if (erro.status === 403 || erro.status === 404) {
-        return "A chave não tem permissão para salvar. Ela precisa de Contents: Read and write no repositório casamento.";
-      }
-      if (erro instanceof TypeError) return "Sem conexão. A última mudança não foi salva.";
-      return "Não foi possível salvar a última mudança. Tente de novo.";
     }
 
     // ---------- tela ----------
     function atualizarContador() {
       const total = convidados.length;
-      const confirmados = convidados.filter((c) => c.confirmado).length;
-      el.confirmados.textContent = confirmados;
-      el.pendentes.textContent = total - confirmados;
+      const conf = convidados.filter((c) => c.confirmado);
+      const kids = convidados.filter((c) => c.crianca);
+      el.confirmados.textContent = conf.length;
+      el.pendentes.textContent = total - conf.length;
+      el.criancas.textContent = kids.length;
       el.total.textContent = total;
-      const pct = total ? Math.round((confirmados / total) * 100) : 0;
+      const pct = total ? Math.round((conf.length / total) * 100) : 0;
       el.barra.style.width = pct + "%";
-      el.nota.textContent = total
-        ? `${pct}% da lista já confirmou` + (atrasada ? " · pode estar alguns minutos atrasada" : "")
-        : "A lista está vazia.";
+      el.nota.textContent = total ? `${pct}% da lista já confirmou` : "A lista está vazia.";
+      el.meia.hidden = !total;
+      el.meia.innerHTML = "";
+      el.meia.append(
+        "Criança conta meia: ",
+        Object.assign(document.createElement("strong"), { textContent: numero(meia(conf)) }),
+        " confirmados de ",
+        Object.assign(document.createElement("strong"), { textContent: numero(meia(convidados)) }),
+      );
+      for (const lista of LISTAS) {
+        const g = convidados.filter((c) => c.lista === lista);
+        const k = g.filter((c) => c.crianca).length;
+        lados[lista].resumo.textContent = g.length
+          ? `${g.filter((c) => c.confirmado).length} de ${g.length} confirmados` + (k ? ` · ${k} ${k === 1 ? "criança" : "crianças"}` : "")
+          : "Ninguém ainda";
+      }
+    }
+
+    function passaNoFiltro(c, termo) {
+      if (filtro === "confirmados" && !c.confirmado) return false;
+      if (filtro === "pendentes" && c.confirmado) return false;
+      if (filtro === "criancas" && !c.crianca) return false;
+      return !termo || semAcento(c.nome).includes(termo);
+    }
+
+    function linha(c, posicao) {
+      const li = document.createElement("li");
+      li.className = "convidado" + (c.confirmado ? " sim" : "") + (c.crianca ? " kid" : "");
+      li.dataset.id = c.id;
+
+      const pos = document.createElement("span");
+      pos.className = "pos";
+      pos.setAttribute("aria-hidden", "true");
+      pos.textContent = posicao;
+
+      const marca = document.createElement("label");
+      marca.className = "marca";
+      const caixa = document.createElement("input");
+      caixa.type = "checkbox";
+      caixa.className = "caixa";
+      caixa.checked = c.confirmado;
+      caixa.dataset.acao = "marcar";
+      const nome = document.createElement("span");
+      nome.className = "nome";
+      nome.textContent = c.nome;
+      marca.append(caixa, nome);
+
+      const tag = document.createElement("label");
+      tag.className = "tag";
+      const kid = document.createElement("input");
+      kid.type = "checkbox";
+      kid.checked = c.crianca;
+      kid.dataset.acao = "crianca";
+      kid.setAttribute("aria-label", `${c.nome} é criança`);
+      tag.append(kid, "criança");
+
+      const remover = document.createElement("button");
+      remover.type = "button";
+      remover.className = "remover";
+      remover.dataset.acao = "remover";
+      remover.setAttribute("aria-label", "Remover " + c.nome);
+      remover.textContent = "×";
+
+      li.append(pos, marca, tag, remover);
+      return li;
     }
 
     function renderizar() {
       atualizarContador();
       const termo = semAcento(el.busca.value);
-      const editando = !!lerChave();
-      const visiveis = [...convidados]
-        .filter((c) => filtro === "todos" || (filtro === "confirmados") === c.confirmado)
-        .filter((c) => !termo || semAcento(c.nome).includes(termo))
-        .sort(porNome);
-
-      const frag = document.createDocumentFragment();
-      for (const c of visiveis) {
-        const li = document.createElement("li");
-        li.className = "convidado" + (c.confirmado ? " sim" : "");
-        li.dataset.id = c.id;
-
-        const marca = document.createElement("label");
-        marca.className = "marca";
-        const caixa = document.createElement("input");
-        caixa.type = "checkbox";
-        caixa.checked = c.confirmado;
-        caixa.dataset.id = c.id;
-        const nome = document.createElement("span");
-        nome.className = "nome";
-        nome.textContent = c.nome;
-        marca.append(caixa, nome);
-        li.append(marca);
-
-        if (editando) {
-          const remover = document.createElement("button");
-          remover.type = "button";
-          remover.className = "remover";
-          remover.dataset.remover = c.id;
-          remover.setAttribute("aria-label", "Remover " + c.nome);
-          remover.textContent = "×";
-          li.append(remover);
+      for (const lista of LISTAS) {
+        const lado = lados[lista];
+        const doGrupo = convidados.filter((c) => c.lista === lista);
+        const frag = document.createDocumentFragment();
+        doGrupo.forEach((c, i) => { if (passaNoFiltro(c, termo)) frag.append(linha(c, i + 1)); });
+        const qtd = frag.childNodes.length;
+        lado.itens.replaceChildren(frag);
+        lado.itens.hidden = !qtd;
+        lado.vazio.hidden = !!qtd;
+        if (!qtd) {
+          lado.vazio.textContent = !doGrupo.length ? "Ninguém nesta lista ainda."
+            : termo ? `Ninguém com “${el.busca.value.trim()}” aqui.`
+            : filtro === "confirmados" ? "Ninguém confirmou ainda."
+            : filtro === "criancas" ? "Nenhuma criança nesta lista."
+            : "Todo mundo já confirmou!";
         }
-        frag.append(li);
       }
-      el.lista.replaceChildren(frag);
-      el.lista.hidden = !visiveis.length;
-
-      el.vazio.hidden = !!visiveis.length || !convidados.length;
-      if (!visiveis.length) {
-        el.vazio.textContent = termo
-          ? `Ninguém com “${el.busca.value.trim()}” nesta parte da lista.`
-          : filtro === "confirmados" ? "Ainda ninguém confirmou." : "Todo mundo já confirmou!";
-      }
-    }
-
-    function atualizarModo() {
-      const editando = !!lerChave();
-      el.formNovo.hidden = !editando;
-      el.botaoEdicao.textContent = editando ? "Sair do modo edição" : "Ativar modo edição";
-      el.rodapeEdicao.textContent = editando
-        ? "Modo edição ativo neste aparelho. As mudanças são salvas na hora."
-        : "Só leitura neste aparelho.";
-      el.dica.textContent = editando
-        ? "Toque num nome para marcar ou desmarcar a presença."
-        : "Para marcar presenças, ative o modo edição no fim da página.";
     }
 
     let timerAviso;
@@ -783,111 +734,73 @@
         renderizar();
       });
     });
-
     el.busca.addEventListener("input", renderizar);
 
-    // sem modo edição, tocar no nome abre as instruções em vez de marcar
-    el.lista.addEventListener("click", (e) => {
-      if (e.target.matches('input[type="checkbox"]') && !lerChave()) {
-        e.preventDefault();
-        abrirEdicao();
-        return;
-      }
-      const remover = e.target.closest("[data-remover]");
-      if (remover) {
-        const c = convidados.find((x) => x.id === remover.dataset.remover);
-        if (!c || !confirm(`Remover ${c.nome} da lista?`)) return;
+    for (const lista of LISTAS) {
+      const lado = lados[lista];
+
+      // marcar presença ou criança: muda na hora, sem reordenar a tela
+      lado.itens.addEventListener("change", (e) => {
+        const caixa = e.target;
+        const li = caixa.closest(".convidado");
+        if (!li || !caixa.dataset.acao) return;
+        const c = convidados.find((x) => x.id === li.dataset.id);
+        if (!c) return;
+        const valor = caixa.checked;
+        const campo = caixa.dataset.acao === "marcar" ? "confirmado" : "crianca";
+        convidados = convidados.map((x) => (x.id === c.id ? { ...x, [campo]: valor } : x));
+        li.classList.toggle(campo === "confirmado" ? "sim" : "kid", valor);
+        atualizarContador();
+        salvar({ tipo: caixa.dataset.acao, id: c.id, valor });
+      });
+
+      lado.itens.addEventListener("click", (e) => {
+        const botao = e.target.closest('[data-acao="remover"]');
+        if (!botao) return;
+        const c = convidados.find((x) => x.id === botao.closest(".convidado").dataset.id);
+        if (!c || !confirm(`Remover ${c.nome} da lista ${doLado(c.lista)}?`)) return;
         convidados = convidados.filter((x) => x.id !== c.id);
         renderizar();
-        salvar({ tipo: "remover", id: c.id, mensagem: `Remove ${c.nome}` });
-      }
-    });
+        salvar({ tipo: "remover", id: c.id });
+      });
 
-    el.lista.addEventListener("change", (e) => {
-      const caixa = e.target;
-      if (!caixa.matches('input[type="checkbox"]')) return;
-      const c = convidados.find((x) => x.id === caixa.dataset.id);
-      if (!c) return;
-      const valor = caixa.checked;
-      convidados = convidados.map((x) => (x.id === c.id ? { ...x, confirmado: valor } : x));
-      caixa.closest(".convidado").classList.toggle("sim", valor);   // marca na hora, sem reordenar a tela
-      atualizarContador();
-      salvar({ tipo: "marcar", id: c.id, valor, mensagem: `${valor ? "Confirma" : "Desmarca"} ${c.nome}` });
-    });
-
-    el.formNovo.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const nome = limparNome(el.novoNome.value);
-      if (!nome) return;
-      if (convidados.some((c) => semAcento(c.nome) === semAcento(nome))
-          && !confirm(`Já tem “${nome}” na lista. Adicionar outra pessoa com esse nome?`)) return;
-      const id = novoId();
-      convidados = [...convidados, { id, nome, confirmado: false }];
-      el.novoNome.value = "";
-      renderizar();
-      salvar({ tipo: "adicionar", id, nome, mensagem: `Adiciona ${nome}` });
-    });
-
-    // ---------- modo edição ----------
-    function abrirEdicao() {
-      el.avisoChave.textContent = "";
-      el.campoChave.value = "";
-      el.janela.showModal();
+      lado.form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const campo = lado.form.querySelector(".campo");
+        const kid = lado.form.querySelector("[data-novo-crianca]");
+        const nome = limparNome(campo.value);
+        if (!nome) return;
+        const repetido = convidados.find((c) => semAcento(c.nome) === semAcento(nome));
+        if (repetido && !confirm(`Já tem “${repetido.nome}” na lista ${doLado(repetido.lista)}. Adicionar outra pessoa com esse nome?`)) return;
+        const novo = { id: novoId(), lista, nome, confirmado: false, crianca: kid.checked };
+        // entra no fim da lista dela
+        const ultimo = convidados.map((c) => c.lista).lastIndexOf(lista);
+        convidados = [...convidados.slice(0, ultimo + 1), novo, ...convidados.slice(ultimo + 1)];
+        campo.value = "";
+        kid.checked = false;
+        if (filtro !== "todos" && filtro !== "pendentes" && !(filtro === "criancas" && novo.crianca)) {
+          // volta para "todos" para a pessoa ver quem acabou de entrar
+          document.querySelector('[data-filtro="todos"]').click();
+        } else {
+          renderizar();
+        }
+        campo.focus();
+        salvar({ tipo: "adicionar", id: novo.id, lista, nome, crianca: novo.crianca });
+      });
     }
 
-    el.botaoEdicao.addEventListener("click", () => {
-      if (lerChave()) {
-        apagarChave();
-        atualizarModo();
-        renderizar();
-        mostrarAviso("Modo edição desligado. A chave foi apagada deste aparelho.", "ok", 3500);
-      } else {
-        abrirEdicao();
-      }
-    });
-
-    el.janela.querySelector("[data-fechar]").addEventListener("click", () => el.janela.close());
-    el.janela.addEventListener("click", (e) => { if (e.target === el.janela) el.janela.close(); });
-
-    el.formChave.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const chave = el.campoChave.value.trim();
-      if (!chave) return;
-      el.ativar.disabled = true;
-      el.avisoChave.textContent = "Conferindo a chave…";
-      try {
-        const r = await fetch(`${API}?ref=${RAMO}`, {
-          headers: { Accept: "application/vnd.github+json", Authorization: "Bearer " + chave },
-          cache: "no-store",
-        });
-        if (r.status === 401) { el.avisoChave.textContent = "Essa chave não foi aceita pelo GitHub. Confira se copiou ela inteira."; return; }
-        if (!r.ok) { el.avisoChave.textContent = "A chave não enxerga o repositório casamento. Confira o passo 3."; return; }
-        const j = await r.json();
-        guardarChave(chave);
-        base = { lista: validar(JSON.parse(deBase64(j.content))), sha: j.sha };
-        if (!pendentes) { convidados = base.lista; atrasada = false; }
-        el.janela.close();
-        atualizarModo();
-        renderizar();
-        mostrarAviso("Modo edição ativado neste aparelho", "ok", 3000);
-      } catch {
-        el.avisoChave.textContent = "Sem conexão com o GitHub. Tente de novo.";
-      } finally {
-        el.ativar.disabled = false;
-      }
-    });
-
-    // ao voltar para a aba, busca o que a outra pessoa marcou
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible" && !pendentes && Date.now() - carregadoEm > 15000) {
+    // traz o que a outra pessoa marcou: ao voltar para a aba e de tempos em tempos
+    function talvezAtualizar(intervalo) {
+      if (document.visibilityState === "visible" && !pendentes && Date.now() - carregadoEm > intervalo) {
         carregar({ silencioso: true });
       }
-    });
+    }
+    document.addEventListener("visibilitychange", () => talvezAtualizar(10000));
+    setInterval(() => talvezAtualizar(40000), 45000);
 
     // avisa antes de fechar se ainda tem mudança salvando
     window.addEventListener("beforeunload", (e) => { if (pendentes) e.preventDefault(); });
 
-    atualizarModo();
     carregar();
   </script>
 </body>

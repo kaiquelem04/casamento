@@ -256,7 +256,7 @@ a {
 @media (min-width: 860px) {
   .linha-do-tempo {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     max-width: none;
   }
   .momento {
@@ -540,7 +540,6 @@ a {
   .momento:nth-child(2) { --atraso: 0.12s; }
   .momento:nth-child(3) { --atraso: 0.24s; }
   .momento:nth-child(4) { --atraso: 0.36s; }
-  .momento:nth-child(5) { --atraso: 0.48s; }
 }
 .texto[data-anima] { --atraso: 0.1s; }
 .acoes[data-anima] { --atraso: 0.2s; }

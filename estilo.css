@@ -256,7 +256,8 @@ a {
 @media (min-width: 860px) {
   .linha-do-tempo {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-auto-flow: column;      /* uma coluna por momento (4 no site, 3 na versão da cerimônia) */
+    grid-auto-columns: 1fr;
     max-width: none;
   }
   .momento {
